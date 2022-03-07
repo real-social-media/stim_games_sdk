@@ -1,0 +1,23 @@
+{
+	"include": ["src/**/*"],
+	"exclude": ["src/**/*.test.ts", "src/**/*.mock.ts"],
+	"compilerOptions": {
+    "strict":true,
+		"rootDir": "src",
+		"outDir": "dist",
+		"sourceMap": true,
+		"noImplicitAny": true,
+		"module": "esnext",
+		"target": "esnext",
+		"jsx": "react",
+		"allowJs": true,
+		"moduleResolution": "node",
+		"allowSyntheticDefaultImports": true,
+		"downlevelIteration": true,
+		"esModuleInterop": true,
+		"declaration": true,
+		"skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true
+	}
+}
