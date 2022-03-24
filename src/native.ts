@@ -21,32 +21,20 @@ export const postToExperienceEvent = (
 	}
 }
 
-// ACTIONS
-export const getUserDetailsAction = (
-	data: object | string | null | undefined,
-): IframeAction<object | string | null | undefined> => ({
-	type: IframeActionKind.GetUserDetails,
-	payload: { data },
-})
-
-export const loadExperienceAction = (
-	data: object | string | undefined,
-): IframeAction<object | string | undefined> => ({
-	type: IframeActionKind.LoadExperience,
-	payload: { data },
-})
-
 // FUNCTIONS
 /** Initial Event called when the experience loads */
 export function loadExperience(data: object, targetId: string, isNative?: boolean) {
-	return postToExperienceEvent(loadExperienceAction(data), targetId, isNative)
+	return postToExperienceEvent({ type: IframeActionKind.LoadExperience, payload: { data } }, targetId, isNative)
 }
 
 /** Sends user details to experience once approved by the user */
-export function fetchUserData(
-	data: object | null,
-	targetId: string,
-	isNative?: boolean,
-) {
-	return postToExperienceEvent(getUserDetailsAction(data), targetId, isNative)
+export function fetchUserData(data: object | null, targetId: string, isNative?: boolean) {
+	return postToExperienceEvent(
+		{
+			type: IframeActionKind.GetUserDetails,
+			payload: { data },
+		},
+		targetId,
+		isNative,
+	)
 }

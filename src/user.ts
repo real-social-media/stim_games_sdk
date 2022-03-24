@@ -1,9 +1,7 @@
 /**
  * Functions Pertaining to Users Details and data sharing
  */
-
-import { showPrompt } from "./channel"
-import { Global, GlobalType } from "./global"
+import { IframeActionKind, showPrompt } from "./channel"
 
 export enum PermissionType {
 	GET_USER_ID = "get_userid",
@@ -12,34 +10,47 @@ export enum PermissionType {
 	BUY_PASSES = "buy_pass",
 }
 
-/** Call this function initially to initialize the SDK */
-export function initializeSdk(details: GlobalType) {
-	Global.user = details.user
-}
-
 export interface PermissionDataType {
 	title: string
 }
 /** Ask Permissions to get and store the Users Personal Details  */
-export function askPermission(type: PermissionType) {
+const askPermission = async (appName: string, type: PermissionType) => {
 	let data: PermissionDataType = { title: "" }
 
 	switch (type) {
 		case PermissionType.GET_USER_ID:
-			data = { title: `Share your username with ${Global.user.userName}` }
+			data = { title: `Share your username with ${appName}` }
 			break
 		case PermissionType.GET_EMAIL:
-			data = { title: `Share your email with ${Global.user.userName}` }
+			data = { title: `Share your email with ${appName}` }
 			break
 		case PermissionType.GET_PASSES:
 			data = {
-				title: `Grant ${Global.user.userName} access to view your passes`,
+				title: `Grant ${appName} access to view your passes`,
 			}
 			break
 	}
 
 	showPrompt(data)
+
+	return await new Promise((res, rej) => {
+		window.addEventListener(
+			"message",
+			function(e) {
+				switch (e.data.type) {
+					case IframeActionKind.GetUserDetails:
+						res({ type: "getData", payload: e.data })
+						break
+				}
+			},
+			false,
+		)
+	})
 }
 
 /** Buy Passes  */
 export function buyPass(passName: string) {}
+
+export const User = {
+	askPermission,
+}
