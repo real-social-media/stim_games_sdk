@@ -1,4 +1,4 @@
-import { askPermission, PermissionType } from "../user"
+import { User, PermissionType } from "../user"
 import * as channel from "../channel"
 
 jest.mock("../channel.ts", () => ({
@@ -7,8 +7,8 @@ jest.mock("../channel.ts", () => ({
 
 describe("askPermission", () => {
 	it("askPermission get user id", () => {
-		const data = { title: `Share your username with ` }
-		askPermission(PermissionType.GET_USER_ID)
+		const data = { title: `Share the following information with App Name:\n`, desc: "• Username\n" }
+		User.askPermission("App Name", [PermissionType.GET_USER_ID])
 
 		const fooSpy = jest.spyOn(channel, "showPrompt")
 

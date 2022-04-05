@@ -1,5 +1,5 @@
 import { IframeActionKind } from "../channel"
-import { fetchUserData, loadExperience, postToExperienceEvent } from "../native"
+import { sendUserData, loadExperience, postToExperienceEvent } from "../native"
 
 describe("Real Web Channels", () => {
 	let frameSpy: any
@@ -37,10 +37,7 @@ describe("Real Web Channels", () => {
 
 			postToExperienceEvent(action, targetId, false)
 
-			expect(frame?.contentWindow?.postMessage).toHaveBeenCalledWith(
-				action,
-				targetId,
-			)
+			expect(frame?.contentWindow?.postMessage).toHaveBeenCalledWith(action, targetId)
 		})
 
 		it("postToExperienceEvent return action on native", () => {
@@ -74,13 +71,10 @@ describe("Real Web Channels", () => {
 
 			loadExperience(data, targetId, false)
 
-			expect(frame?.contentWindow?.postMessage).toHaveBeenCalledWith(
-				action,
-				targetId,
-			)
+			expect(frame?.contentWindow?.postMessage).toHaveBeenCalledWith(action, targetId)
 		})
 
-		it("fetchUserData returns action on native", () => {
+		it("sendUserData returns action on native", () => {
 			const data = { title: "test" }
 			const action = {
 				type: IframeActionKind.LoadExperience,
@@ -102,8 +96,8 @@ describe("Real Web Channels", () => {
 		})
 	})
 
-	describe("fetchUserData", () => {
-		it("fetchUserData runs postMessage on web", () => {
+	describe("sendUserData", () => {
+		it("sendUserData runs postMessage on web", () => {
 			const data = { title: "test" }
 			const action = {
 				type: IframeActionKind.GetUserDetails,
@@ -119,15 +113,12 @@ describe("Real Web Channels", () => {
 					} as any),
 			)
 
-			fetchUserData(data, targetId, false)
+			sendUserData(data, targetId, false)
 
-			expect(frame?.contentWindow?.postMessage).toHaveBeenCalledWith(
-				action,
-				targetId,
-			)
+			expect(frame?.contentWindow?.postMessage).toHaveBeenCalledWith(action, targetId)
 		})
 
-		it("fetchUserData returns action on native", () => {
+		it("sendUserData returns action on native", () => {
 			const data = { title: "test" }
 			const action = {
 				type: IframeActionKind.GetUserDetails,
@@ -143,7 +134,7 @@ describe("Real Web Channels", () => {
 					} as any),
 			)
 
-			const value = fetchUserData(data, targetId, true)
+			const value = sendUserData(data, targetId, true)
 
 			expect(value).toEqual(action)
 		})

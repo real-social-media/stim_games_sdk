@@ -28,7 +28,7 @@ export function loadExperience(data: object, targetId: string, isNative?: boolea
 }
 
 /** Sends user details to experience once approved by the user */
-export function fetchUserData(data: object | null, targetId: string, isNative?: boolean) {
+export function sendUserData(data: object | null, targetId: string, isNative?: boolean) {
 	return postToExperienceEvent(
 		{
 			type: IframeActionKind.GetUserDetails,

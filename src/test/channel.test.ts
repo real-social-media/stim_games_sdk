@@ -14,7 +14,7 @@ describe("Real Web Channels", () => {
 		it("postToRealAppEvent post message", () => {
 			const action = {
 				type: IframeActionKind.ShowPrompt,
-				payload: { data: "data" },
+				payload: { data: { title: "Title", desc: "Desc" } },
 			}
 
 			const postMessageSpy = jest.fn()
@@ -31,7 +31,7 @@ describe("Real Web Channels", () => {
 
 	describe("showPrompt", () => {
 		it("showPrompt returns action", () => {
-			const data = { title: "test" }
+			const data = { title: "Title", desc: "Desc" }
 			const action = {
 				type: IframeActionKind.ShowPrompt,
 				payload: { data },

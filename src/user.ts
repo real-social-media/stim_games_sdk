@@ -10,26 +10,27 @@ export enum PermissionType {
 	BUY_PASSES = "buy_pass",
 }
 
+const getScopeString = (type: PermissionType) => {
+	const permissionStrings = {
+		[PermissionType.GET_USER_ID]: "Username",
+		[PermissionType.GET_EMAIL]: "Email",
+		[PermissionType.GET_PASSES]: "Access to view your passes",
+		[PermissionType.BUY_PASSES]: "Access to buy passes",
+	}
+
+	return permissionStrings[type]
+}
+
 export interface PermissionDataType {
 	title: string
+	desc: string
 }
 /** Ask Permissions to get and store the Users Personal Details  */
-const askPermission = async (appName: string, type: PermissionType) => {
-	let data: PermissionDataType = { title: "" }
-
-	switch (type) {
-		case PermissionType.GET_USER_ID:
-			data = { title: `Share your username with ${appName}` }
-			break
-		case PermissionType.GET_EMAIL:
-			data = { title: `Share your email with ${appName}` }
-			break
-		case PermissionType.GET_PASSES:
-			data = {
-				title: `Grant ${appName} access to view your passes`,
-			}
-			break
-	}
+const askPermission = async (appName: string, scopes: PermissionType[]) => {
+	const title = `Share the following information with ${appName}:\n`
+	let desc = ""
+	scopes.forEach(s => (desc += `• ${getScopeString(s)}\n`))
+	let data: PermissionDataType = { title, desc }
 
 	showPrompt(data)
 

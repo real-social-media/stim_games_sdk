@@ -1,8 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
-import {  IframeActionKind, PermissionType, User } from 'real-experiences-sdk'
-import { useEffect, useState } from 'react';
-
+import React from 'react'
+import logo from './logo.svg'
+import './App.css'
+import { IframeActionKind, PermissionType, User } from 'real-experiences-sdk'
+import { useEffect, useState } from 'react'
 
 const name = 'Elden Ring'
 
@@ -10,27 +10,21 @@ function App() {
   const [s, setS] = useState('INITIAL')
 
   const getDetails = async () => {
-    await User.askPermission(name, PermissionType.GET_USER_ID)
+    const data = await User.askPermission(name, [PermissionType.GET_USER_ID, PermissionType.GET_EMAIL])
+    setS(JSON.stringify(data))
   }
 
-  useEffect( () => {
-    
-    
+  useEffect(() => {
     window.addEventListener(
       'message',
-      function (e) {
+      function(e) {
         switch (e.data.type) {
           case IframeActionKind.GetUserDetails:
-          // case IframeActionKind.GetUserDetails:
-            // setS('Get Details')
             setS(JSON.stringify(e.data))
-            // api call (server)
             break
-            case IframeActionKind.LoadExperience:
-                setS(JSON.stringify(e?.data))
-                // setS('Loaded')
-                getDetails()
-                
+          case IframeActionKind.LoadExperience:
+            getDetails()
+
             break
           default:
             break
@@ -38,10 +32,8 @@ function App() {
       },
       false,
     )
-
   }, [])
 
-  
   return (
     <div className="App">
       <header className="App-header">
@@ -50,18 +42,13 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          >
+        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
           Learn React
         </a>
-          <div>{s}</div>
+        <div>{s}</div>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
