@@ -1,6 +1,6 @@
 {
 	"name": "real-experiences-sdk",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"license": "MIT",
 	"main": "dist/index.js",
 	"typings": "dist/index.d.ts",
@@ -68,5 +68,8 @@
 	"bugs": {
 		"url": "https://github.com/real-social-media/experience_sdk/issues"
 	},
-	"homepage": "https://github.com/real-social-media/experience_sdk#readme"
+	"homepage": "https://github.com/real-social-media/experience_sdk#readme",
+	"dependencies": {
+		"yup": "0.32.11"
+	}
 }

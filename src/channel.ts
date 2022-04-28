@@ -13,7 +13,7 @@ export enum IframeActionKind {
 
 export type IframeAction<T> = {
 	type: IframeActionKind
-	payload?: { data: T }
+	payload: T
 }
 
 // EVENTS
@@ -28,5 +28,5 @@ export const postToRealAppEvent = (action: IframeAction<PermissionDataType>): vo
 // FUNCTIONS
 /** Shows users a Prompt with OK and Cancel button */
 export function showPrompt(data: PermissionDataType) {
-	postToRealAppEvent({ type: IframeActionKind.ShowPrompt, payload: { data } })
+	postToRealAppEvent({ type: IframeActionKind.ShowPrompt, payload: data })
 }

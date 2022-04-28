@@ -2,6 +2,7 @@
  * Functions Pertaining to Users Details and data sharing
  */
 import { IframeActionKind, showPrompt } from "./channel"
+import { string, object, array } from "yup"
 
 export enum PermissionType {
 	GET_USER_ID = "get_userid",
@@ -21,32 +22,50 @@ const getScopeString = (type: PermissionType) => {
 	return permissionStrings[type]
 }
 
+const validationSchema = object().shape({
+	appName: string()
+		.min(3)
+		.max(100)
+		.required(),
+	scopes: array().min(1),
+})
+
 export interface PermissionDataType {
 	title: string
 	desc: string
 }
+type PropType = { appName: string; scopes: PermissionType[] }
+
 /** Ask Permissions to get and store the Users Personal Details  */
-const askPermission = async (appName: string, scopes: PermissionType[]) => {
-	const title = `Share the following information with ${appName}:\n`
-	let desc = ""
-	scopes.forEach(s => (desc += `• ${getScopeString(s)}\n`))
-	let data: PermissionDataType = { title, desc }
+const askPermission = async (props: PropType): Promise<object | string> => {
+	try {
+		validationSchema.validateSync(props)
 
-	showPrompt(data)
+		const { appName, scopes } = props
 
-	return await new Promise((res, rej) => {
-		window.addEventListener(
-			"message",
-			function(e) {
-				switch (e.data.type) {
-					case IframeActionKind.GetUserDetails:
-						res({ type: "getData", payload: e.data })
-						break
-				}
-			},
-			false,
-		)
-	})
+		const title = `Share the following information with ${appName}:\n`
+		let desc = ""
+		scopes.forEach(s => (desc += `• ${getScopeString(s)}\n`))
+		let data: PermissionDataType = { title, desc }
+
+		showPrompt(data)
+
+		return new Promise(res => {
+			window.addEventListener(
+				"message",
+				function(e) {
+					switch (e.data.type) {
+						case IframeActionKind.GetUserDetails:
+							res(e.data)
+							break
+					}
+				},
+				false,
+			)
+		})
+	} catch (e) {
+		return Promise.reject((e as any).message)
+	}
 }
 
 /** Buy Passes  */

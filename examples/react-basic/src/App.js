@@ -10,8 +10,15 @@ function App() {
   const [s, setS] = useState('INITIAL')
 
   const getDetails = async () => {
-    const data = await User.askPermission(name, [PermissionType.GET_USER_ID, PermissionType.GET_EMAIL])
-    setS(JSON.stringify(data))
+    try {
+      const data = await User.askPermission({
+        appName: name,
+        scopes: [PermissionType.GET_USER_ID, PermissionType.GET_EMAIL],
+      })
+      setS(JSON.stringify(data))
+    } catch (err) {
+      // handle error
+    }
   }
 
   useEffect(() => {
