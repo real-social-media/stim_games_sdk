@@ -31,7 +31,7 @@ export const postToExperienceEvent = (
 // FUNCTIONS
 /** Initial Event called when the experience loads */
 export function loadExperience(data: object, targetId: string, isWeb?: boolean, webRef?: WebRef) {
-	return postToExperienceEvent({ type: IframeActionKind.LoadExperience, payload: { data } }, targetId, isWeb, webRef)
+	return postToExperienceEvent({ type: IframeActionKind.LoadExperience, payload: data }, targetId, isWeb, webRef)
 }
 
 /** Sends user details to experience once approved by the user */
@@ -39,7 +39,7 @@ export function sendUserData(data: object | null, targetId: string, isWeb?: bool
 	return postToExperienceEvent(
 		{
 			type: IframeActionKind.GetUserDetails,
-			payload: { data },
+			payload: data,
 		},
 		targetId,
 		isWeb,
