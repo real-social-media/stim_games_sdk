@@ -1,10 +1,15 @@
 import { IframeAction } from "./actions"
 
+export interface EmmiterInterface {
+	send(action: IframeAction): void
+	request(action: IframeAction): Promise<IframeAction | never>
+}
+
 type PromiseQueue = {
 	[key: string]: Array<Promise<IframeAction>>
 }
 
-class IframeEmmiter {
+class IframeEmmiter implements EmmiterInterface {
 	private target: Window
 	private requests: PromiseQueue = {}
 
