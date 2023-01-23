@@ -1,5 +1,5 @@
 import { EmmiterInterface } from "./IframeEmmiter"
-import { UserID, UserEmail, PostID, PostIsLocked } from "./types"
+import { UserID, UserEmail, PostID } from "./types"
 import * as actions from "./actions"
 
 class GamesSDK {
