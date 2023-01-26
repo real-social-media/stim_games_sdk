@@ -1,10 +1,10 @@
 import { PostID } from "./types"
 
 export enum IframeActionKind {
-	Authorize = "authorize",
-	RequestEmail = "requestEmail",
-	Purchase = "purchase",
-	CHECK_PURCHASES = "checkPurchases",
+	Authorize = "@gameSDK:authorize",
+	RequestEmail = "@gameSDK:requestEmail",
+	Purchase = "@gameSDK:purchase",
+	CheckPurchases = "@gameSDK:checkPurchases",
 }
 
 export type IframeAction = {
@@ -26,6 +26,6 @@ export const purchase = (sku: PostID): IframeAction => ({
 })
 
 export const checkPurchases = (skus: Array<PostID>): IframeAction => ({
-	type: IframeActionKind.CHECK_PURCHASES,
+	type: IframeActionKind.CheckPurchases,
 	payload: skus,
 })
