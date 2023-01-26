@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STIM Games SDK example</title>
+
+  <style type="text/css">
+    body {
+      background: wheat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    h4 {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Games SDK</h1>
+  <p>Status: <span id="status">idle</span></p>
+  <p>User: <span id="user">undefined</span></p>
+  <button id="authorizeBtn" type="button">Authorize</button>
+  <p>Email: <span id="email">undefined</span></p>
+  <button id="requestEmailBtn" type="button">Request email</button>
+
+  <form id="checkPurchasesForm">
+    <h4>checkPurchases</h4>
+    <input type="text" name="postId" placeholder="post id" required />
+    <button type="submit">Submit</button>
+  </form>
+
+  <form id="purchaseForm">
+    <h4>purchase</h4>
+    <input type="text" name="postId" placeholder="post id" required />
+    <button type="submit">Submit</button>
+  </form>
+
+  <script src="js/real-experiences-sdk.umd.production.min.js"></script>
+  <script>
+    const gameSDK = window['real-experiences-sdk'].default
+
+    async function initGame() {
+      const $status = document.getElementById('status')
+      const $user = document.getElementById('user')
+
+      try {
+        $status.innerHTML = 'authorizing'
+
+        /**
+         * return userId by default
+         */
+        const user = await gameSDK.authorize()
+
+        $status.innerHTML = 'authorized'
+        $user.innerHTML = user
+      } catch (error) {
+        alert(error)
+      }
+    }
+
+    async function requestEmail() {
+      const $email = document.getElementById('email')
+
+      try {
+        $email.innerHTML = 'Undefined'
+
+        /**
+         * Any time developer can request email
+         * it will open a permission modal on social app
+         *
+         * note: should be called after authorize
+         */
+        const email = await gameSDK.requestEmail()
+        $email.innerHTML = email
+
+      } catch (error) {
+        alert(error)
+      }
+    }
+
+    document.getElementById('authorizeBtn').addEventListener('click', initGame)
+    document.getElementById('requestEmailBtn').addEventListener('click', requestEmail)
+
+    document.getElementById('checkPurchasesForm').addEventListener('submit', async function (event) {
+      try {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const { postId } = Object.fromEntries(formData);
+
+        const result = await gameSDK.checkPurchases([postId])
+        alert(JSON.stringify(result))
+      } catch (error) {
+        alert(error)
+      }
+    });
+
+    document.getElementById('purchaseForm').addEventListener('submit', function (event) {
+      try {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const { postId } = Object.fromEntries(formData);
+
+        gameSDK.purchase(postId)
+      } catch (error) {
+        alert(error)
+      }
+    });
+
+    initGame()
+  </script>
+</body>
+
+</html>
