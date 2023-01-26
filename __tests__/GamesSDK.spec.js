@@ -1,4 +1,3 @@
-import * as actions from "actions"
 import GamesSDK from "GamesSDK"
 
 const emmiter = { send: jest.fn(), request: jest.fn() }
@@ -15,7 +14,7 @@ describe("GamesSDK", () => {
 			emmiter.request.mockResolvedValueOnce({ payload: userID })
 
 			await expect(gamesSDK.authorize()).resolves.toBe(userID)
-			expect(emmiter.request).toHaveBeenCalledWith({ type: "authorize" })
+			expect(emmiter.request).toHaveBeenCalledWith({ type: "@gameSDK:authorize" })
 		})
 
 		it("failure", async () => {
@@ -32,7 +31,7 @@ describe("GamesSDK", () => {
 			emmiter.request.mockResolvedValueOnce({ payload: email })
 
 			await expect(gamesSDK.requestEmail()).resolves.toBe(email)
-			expect(emmiter.request).toHaveBeenCalledWith({ type: "requestEmail" })
+			expect(emmiter.request).toHaveBeenCalledWith({ type: "@gameSDK:requestEmail" })
 		})
 
 		it("failure", async () => {
@@ -48,7 +47,7 @@ describe("GamesSDK", () => {
 
 		it("success", async () => {
 			await gamesSDK.purchase(sku)
-			expect(emmiter.send).toHaveBeenCalledWith({ type: "purchase", payload: sku })
+			expect(emmiter.send).toHaveBeenCalledWith({ type: "@gameSDK:purchase", payload: sku })
 		})
 
 		it("failure", async () => {
@@ -67,7 +66,7 @@ describe("GamesSDK", () => {
 			emmiter.request.mockResolvedValueOnce({ payload: response })
 
 			await expect(gamesSDK.checkPurchases(skus)).resolves.toEqual(response)
-			expect(emmiter.request).toHaveBeenCalledWith({ type: "checkPurchases", payload: skus })
+			expect(emmiter.request).toHaveBeenCalledWith({ type: "@gameSDK:checkPurchases", payload: skus })
 		})
 
 		it("failure", async () => {
