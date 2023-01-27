@@ -10,6 +10,7 @@ export enum IframeActionKind {
 export type IframeAction = {
 	type: string
 	payload?: any
+	error?: string
 }
 
 export const authorize = (): IframeAction => ({

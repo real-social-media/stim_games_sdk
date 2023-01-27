@@ -5,8 +5,13 @@ export interface EmmiterInterface {
 	request(action: IframeAction): Promise<IframeAction | never>
 }
 
+type PromisedAction = {
+	resolve(action: IframeAction): void
+	reject(error: string): void
+}
+
 type PromiseQueue = {
-	[key: string]: Array<Promise<IframeAction>>
+	[key: string]: Array<PromisedAction>
 }
 
 class IframeEmmiter implements EmmiterInterface {
@@ -23,8 +28,13 @@ class IframeEmmiter implements EmmiterInterface {
 		const requests = this.requests[action.type]
 
 		if (requests) {
-			// @ts-ignore
-			requests.forEach(res => res(action))
+			requests.forEach(({ resolve, reject }) => {
+				if (action?.error) {
+					reject(action.error)
+				} else {
+					resolve(action)
+				}
+			})
 
 			this.requests[action.type] = []
 		}
@@ -35,13 +45,12 @@ class IframeEmmiter implements EmmiterInterface {
 	}
 
 	request(action: IframeAction): Promise<IframeAction | never> {
-		return new Promise(res => {
+		return new Promise((resolve, reject) => {
 			if (!this.requests[action.type]) {
 				this.requests[action.type] = []
 			}
 
-			// @ts-ignore
-			this.requests[action.type].push(res)
+			this.requests[action.type].push({ resolve, reject })
 			this.send(action)
 		})
 	}

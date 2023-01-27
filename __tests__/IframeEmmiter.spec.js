@@ -19,7 +19,7 @@ describe("IframeEmmiter", () => {
 		expect(target.postMessage).toHaveBeenCalledWith(testAction(), "*")
 	})
 
-	it("response", async () => {
+	it("success", async () => {
 		jest.spyOn(window, "addEventListener")
 		const emitter = new IframeEmmiter(target)
 		const request = emitter.request(testAction())
@@ -30,7 +30,21 @@ describe("IframeEmmiter", () => {
 		const event = { data: testAction({ token: "token" }) }
 		response(event)
 
-		const result = await request
-		expect(result).toEqual(event.data)
+		await expect(request).resolves.toEqual(event.data)
+	})
+
+	it("failure", async () => {
+		jest.spyOn(window, "addEventListener")
+		const emitter = new IframeEmmiter(target)
+		const request = emitter.request(testAction())
+
+		expect(window.addEventListener).toHaveBeenCalledWith("message", expect.any(Function))
+
+		const response = window.addEventListener.mock.calls[0][1]
+		const error = new Error("Error")
+		const event = { data: { type: "TEST", error } }
+		response(event)
+
+		await expect(request).rejects.toEqual(error)
 	})
 })
