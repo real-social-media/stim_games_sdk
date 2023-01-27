@@ -1,10 +1,10 @@
-import { User } from "./user"
+import IframeEmmiter from "./IframeEmmiter"
+import GamesSDK from "./GamesSDK"
+import * as actions from "./actions"
 
-export * from "./channel"
-export * from "./native"
-export * from "./user"
+export { IframeActionKind, IframeAction } from "./types"
+export { actions }
 
-/** Experiences Sdk */
-export const Experiences = {
-	User,
-}
+const emmiter = new IframeEmmiter(window.parent)
+
+export default new GamesSDK(emmiter)

@@ -1,75 +1,63 @@
 {
-	"name": "real-experiences-sdk",
-	"version": "0.1.4",
-	"license": "MIT",
-	"main": "dist/index.js",
-	"typings": "dist/index.d.ts",
-	"files": [
-		"dist",
-		"src"
-	],
-	"engines": {
-		"node": ">=10"
-	},
-	"scripts": {
-		"start": "tsdx watch",
-		"build": "tsdx build",
-		"test": "tsdx test",
-		"lint": "tsdx lint",
-		"prepare": "tsdx build",
-		"size": "size-limit",
-		"analyze": "size-limit --why",
-		"validate": "npm run lint:editorconfig && npm run lint && npm run tests:unit"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "tsdx lint"
-		}
-	},
-	"author": "REAL",
-	"module": "dist/real-experiences-sdk.esm.js",
-	"size-limit": [
-		{
-			"path": "dist/real-experiences-sdk.cjs.production.min.js",
-			"limit": "10 KB"
-		},
-		{
-			"path": "dist/real-experiences-sdk.esm.js",
-			"limit": "10 KB"
-		}
-	],
-	"jest": {
-		"testEnvironment": "jsdom"
-	},
-	"devDependencies": {
-		"@babel/core": "7.15.4",
-		"@babel/preset-env": "7.15.4",
-		"@babel/preset-typescript": "7.15.0",
-		"@size-limit/preset-small-lib": "5.0.3",
-		"@types/jest": "27.0.1",
-		"babel-jest": "27.1.0",
-		"jest": "27.1.0",
-		"husky": "7.0.1",
-		"size-limit": "5.0.3",
-		"tsdx": "0.14.1",
-		"tslib": "2.3.1",
-		"typescript": "4.3.5",
-		"typedoc": "0.22.13"
-	},
-	"description": "TypeScript/JavaScript SDK for interaction with REAL Experiences.",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/real-social-media/experience_sdk.git"
-	},
-	"keywords": [
-		"experience",
-		"real"
-	],
-	"bugs": {
-		"url": "https://github.com/real-social-media/experience_sdk/issues"
-	},
-	"homepage": "https://github.com/real-social-media/experience_sdk#readme",
-	"dependencies": {
-		"yup": "0.32.11"
-	}
+  "name": "games-sdk",
+  "version": "0.1.4",
+  "license": "MIT",
+  "main": "dist/games-sdk.umd.production.min.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build --format umd",
+    "test": "tsdx test",
+    "test:coverage": "tsdx test --coverage",
+    "lint": "tsdx lint",
+    "prepare": "husky install",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "validate": "npm run size && npm run lint && npm run test:coverage"
+  },
+  "author": "STIM",
+  "module": "dist/games-sdk.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/games-sdk.umd.production.min.js",
+      "limit": "10 KB"
+    }
+  ],
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
+  "devDependencies": {
+    "@babel/core": "7.15.4",
+    "@babel/preset-env": "7.15.4",
+    "@babel/preset-typescript": "7.15.0",
+    "@size-limit/preset-small-lib": "5.0.3",
+    "@types/jest": "27.0.1",
+    "babel-jest": "27.1.0",
+    "jest": "27.1.0",
+    "size-limit": "5.0.3",
+    "tsdx": "0.14.1",
+    "tslib": "2.3.1",
+    "typescript": "4.3.5",
+    "husky": "^8.0.0"
+  },
+  "description": "TypeScript/JavaScript SDK for interaction with STIM Games",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/real-social-media/experience_sdk.git"
+  },
+  "keywords": [
+    "sdk",
+    "stim"
+  ],
+  "bugs": {
+    "url": "https://github.com/real-social-media/experience_sdk/issues"
+  },
+  "homepage": "https://github.com/real-social-media/experience_sdk#readme"
 }
