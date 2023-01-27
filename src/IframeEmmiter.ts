@@ -1,4 +1,4 @@
-import { IframeAction } from "./actions"
+import { IframeAction } from "./types"
 
 export interface EmmiterInterface {
 	send(action: IframeAction): void
