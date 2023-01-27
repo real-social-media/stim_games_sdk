@@ -1,17 +1,4 @@
-import { PostID } from "./types"
-
-export enum IframeActionKind {
-	Authorize = "@gameSDK:authorize",
-	RequestEmail = "@gameSDK:requestEmail",
-	Purchase = "@gameSDK:purchase",
-	CheckPurchases = "@gameSDK:checkPurchases",
-}
-
-export type IframeAction = {
-	type: string
-	payload?: any
-	error?: string
-}
+import { PostID, IframeActionKind, IframeAction } from "./types"
 
 export const authorize = (): IframeAction => ({
 	type: IframeActionKind.Authorize,
