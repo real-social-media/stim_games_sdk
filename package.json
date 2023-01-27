@@ -22,12 +22,6 @@
     "analyze": "size-limit --why",
     "validate": "npm run size && npm run lint && npm run test:coverage"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run validate"
-    }
-  },
   "author": "REAL",
   "module": "dist/real-experiences-sdk.esm.js",
   "size-limit": [
