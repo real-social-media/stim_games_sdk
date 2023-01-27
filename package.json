@@ -1,6 +1,6 @@
 {
   "name": "games-sdk",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "dist/games-sdk.umd.production.min.js",
   "typings": "dist/index.d.ts",
