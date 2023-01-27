@@ -17,8 +17,8 @@ class GamesSDK {
 		return action.payload
 	}
 
-	async purchase(sku: PostID): Promise<void> {
-		await this.emmiter.send(actions.purchase(sku))
+	purchase(sku: PostID): void {
+		this.emmiter.send(actions.purchase(sku))
 	}
 
 	async checkPurchases(skus: Array<PostID>): Promise<any> {
