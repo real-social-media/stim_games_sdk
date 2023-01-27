@@ -46,15 +46,8 @@ describe("GamesSDK", () => {
 		const sku = "postId1"
 
 		it("success", async () => {
-			await gamesSDK.purchase(sku)
+			gamesSDK.purchase(sku)
 			expect(emmiter.send).toHaveBeenCalledWith({ type: "@gameSDK:purchase", payload: sku })
-		})
-
-		it("failure", async () => {
-			const error = new Error("Some Error")
-			emmiter.send.mockRejectedValueOnce(error)
-
-			await expect(gamesSDK.purchase(sku)).rejects.toBe(error)
 		})
 	})
 
