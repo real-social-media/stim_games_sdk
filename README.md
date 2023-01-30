@@ -7,7 +7,7 @@ We are rendering games as an iframe and using iframe messages to communicate wit
 ## Installing
 
 ```
-npm install @stimapp/games-sdk  --save
+npm install games-sdk --save
 ```
 
 ## Methods

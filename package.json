@@ -20,7 +20,8 @@
     "prepare": "husky install",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "validate": "npm run size && npm run lint && npm run test:coverage"
+    "validate": "npm run size && npm run lint && npm run test:coverage",
+    "update:examples": "cp ./dist/games-sdk.umd.production.min.js ./examples/js && cp ./dist/games-sdk.umd.production.min.js.map ./examples/js"
   },
   "author": "STIM",
   "module": "dist/games-sdk.esm.js",
