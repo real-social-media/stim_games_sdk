@@ -23,8 +23,16 @@ class IframeEmmiter implements EmmiterInterface {
 		window.addEventListener("message", this.response.bind(this))
 	}
 
+	private parseAction(event: MessageEvent): IframeAction {
+		try {
+			return JSON.parse(event.data)
+		} catch (error) {
+			return { type: "NOT_SUPPORTED" }
+		}
+	}
+
 	private response(event: MessageEvent) {
-		const action: IframeAction = JSON.parse(event.data)
+		const action = this.parseAction(event)
 		const requests = this.requests[action.type]
 
 		if (requests) {
