@@ -33,6 +33,16 @@ describe("IframeEmmiter", () => {
 		await expect(request).resolves.toEqual(JSON.parse(event.data))
 	})
 
+	it("filter string messages", async done => {
+		jest.spyOn(window, "addEventListener")
+		new IframeEmmiter(target)
+
+		const response = window.addEventListener.mock.calls[0][1]
+
+		response({ data: "message" })
+		done()
+	})
+
 	it("failure", async () => {
 		jest.spyOn(window, "addEventListener")
 		const emitter = new IframeEmmiter(target)
