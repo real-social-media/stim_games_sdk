@@ -16,7 +16,7 @@ describe("IframeEmmiter", () => {
 		const emitter = new IframeEmmiter(target)
 		emitter.request(testAction())
 
-		expect(target.postMessage).toHaveBeenCalledWith(testAction(), "*")
+		expect(target.postMessage).toHaveBeenCalledWith(JSON.stringify(testAction()), "*")
 	})
 
 	it("success", async () => {
@@ -27,10 +27,10 @@ describe("IframeEmmiter", () => {
 		expect(window.addEventListener).toHaveBeenCalledWith("message", expect.any(Function))
 
 		const response = window.addEventListener.mock.calls[0][1]
-		const event = { data: testAction({ token: "token" }) }
+		const event = { data: JSON.stringify(testAction({ token: "token" })) }
 		response(event)
 
-		await expect(request).resolves.toEqual(event.data)
+		await expect(request).resolves.toEqual(JSON.parse(event.data))
 	})
 
 	it("failure", async () => {
@@ -41,8 +41,8 @@ describe("IframeEmmiter", () => {
 		expect(window.addEventListener).toHaveBeenCalledWith("message", expect.any(Function))
 
 		const response = window.addEventListener.mock.calls[0][1]
-		const error = new Error("Error")
-		const event = { data: { type: "TEST", error } }
+		const error = "Error"
+		const event = { data: JSON.stringify({ type: "TEST", error }) }
 		response(event)
 
 		await expect(request).rejects.toEqual(error)

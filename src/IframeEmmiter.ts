@@ -24,7 +24,7 @@ class IframeEmmiter implements EmmiterInterface {
 	}
 
 	private response(event: MessageEvent) {
-		const action: IframeAction = event.data
+		const action: IframeAction = JSON.parse(event.data)
 		const requests = this.requests[action.type]
 
 		if (requests) {
@@ -41,7 +41,7 @@ class IframeEmmiter implements EmmiterInterface {
 	}
 
 	send(action: IframeAction): void {
-		this.target.postMessage(action, "*")
+		this.target.postMessage(JSON.stringify(action), "*")
 	}
 
 	request(action: IframeAction): Promise<IframeAction | never> {
