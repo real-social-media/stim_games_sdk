@@ -5,6 +5,8 @@ import * as actions from "./actions"
 export { IframeActionKind, IframeAction } from "./types"
 export { actions }
 
-const emmiter = new IframeEmmiter(window.parent)
+// @ts-ignore
+const target = window?.ReactNativeWebView || window.parent
+const emmiter = new IframeEmmiter(target)
 
 export default new GamesSDK(emmiter)
