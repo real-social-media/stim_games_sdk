@@ -1,8 +1,8 @@
 # STIM Games SDK
 
-TypeScript/JavaScript SDK for interaction with Stim.io Experience
+TypeScript/JavaScript SDK for interaction with games shared on Stim.io
 
-For HTML5 games shared on Stim.io we are rendering games as an iframe and using iframe messages to communicate between your game and the Stim.io platform. In the official "Stim Gaming" iOS app we use a WKWebView. This sdk provides promise based methods to communicate between the Stim platform and your game.
+For HTML5 games shared on Stim.io we are rendering games as an iframe and using iframe messages to communicate between your game and the Stim.io platform. In the official "Stim Gaming" iOS app we use a WKWebView. This sdk provides promise based methods to communicate between the Stim platform and your game. Support for Cloud Gaming based games is coming shortly, but the SDK methods will remain the same.
 
 ```
 npm install games-sdk --save
